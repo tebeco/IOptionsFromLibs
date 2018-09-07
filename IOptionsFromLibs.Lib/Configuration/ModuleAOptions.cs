@@ -12,7 +12,7 @@ namespace IOptionsFromLibs.Lib.Configuration
 
         public string Y { get; set; } = "Y default value";
 
-        public string Z { get; set; } = "Y default value";
+        public int Z { get; set; } = 0;
 
     }
 }

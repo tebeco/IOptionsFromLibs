@@ -30,7 +30,7 @@ namespace IOptionsFromLibs.Consumer
         {
             services.AddModuleA(options => {
                 options.Y = "Y value from consumer startup";
-                options.Z = "Z value from consumer startup";
+                options.Z = -1;
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
