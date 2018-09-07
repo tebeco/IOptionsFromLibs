@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IOptionsFromLibs.Lib.Configuration;
+﻿using IOptionsFromLibs.Lib.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace IOptionsFromLibs.Consumer
 {
@@ -28,7 +22,8 @@ namespace IOptionsFromLibs.Consumer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddModuleA(options => {
+            services.AddModuleA(options =>
+            {
                 options.Y = "Y value from consumer startup";
                 options.Z = -1;
             });
@@ -49,9 +44,9 @@ namespace IOptionsFromLibs.Consumer
             }
 
             app.UseHttpsRedirection();
-            app.Run(async (context)=>
+            app.Run(async (context) =>
             {
-                var moduleAOptions= context.RequestServices.GetService<IOptions<ModuleAOptions>>();
+                var moduleAOptions = context.RequestServices.GetService<IOptions<ModuleAOptions>>();
 
                 var optionsAsStringJson = JsonConvert.SerializeObject(moduleAOptions);
                 var optionAsBytesJson = Encoding.UTF8.GetBytes(optionsAsStringJson);

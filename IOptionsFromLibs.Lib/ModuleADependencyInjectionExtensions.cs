@@ -12,6 +12,13 @@ namespace IOptionsFromLibs.Lib.Configuration
                     .Configure<IConfiguration>((options, configuration) =>
                     {
                         configuration.Bind(ModuleAOptions.ModuleASectionName, options);
+                    })
+                    .PostConfigure(options =>
+                    {
+                        if (options.Z < 0)
+                        {
+                            options.Z = 0;
+                        }
                     });
 
             return services;
@@ -19,14 +26,7 @@ namespace IOptionsFromLibs.Lib.Configuration
         public static IServiceCollection AddModuleA(this IServiceCollection services, Action<ModuleAOptions> configure)
         {
             return services.AddModuleA()
-                           .Configure(configure)
-                           .PostConfigure<ModuleAOptions>(options =>
-                           {
-                               if (options.Z < 0)
-                               {
-                                   options.Z = 0;
-                               }
-                           });
+                           .Configure(configure);
         }
     }
 }
