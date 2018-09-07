@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using IOptionsFromLibs.Lib.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -11,17 +12,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace IOptionsFromLibs.Consumer
 {
     public class Startup
     {
-        private readonly ILoggerFactory _loggerFactory;
-
-        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _loggerFactory = loggerFactory;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,11 +28,9 @@ namespace IOptionsFromLibs.Consumer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
-            var logger = _loggerFactory.CreateLogger("Startup");
-
-            services.AddModuleA(logger, options => {
-                logger.LogInformation("Callback inside consumer lambda");
+            services.AddModuleA(options => {
+                options.Y = "Y value from consumer startup";
+                options.Z = "Z value from consumer startup";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -52,7 +49,16 @@ namespace IOptionsFromLibs.Consumer
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.Run(async (context)=>
+            {
+                var moduleAOptions= context.RequestServices.GetService<IOptions<ModuleAOptions>>();
+
+                var optionsAsStringJson = JsonConvert.SerializeObject(moduleAOptions);
+                var optionAsBytesJson = Encoding.UTF8.GetBytes(optionsAsStringJson);
+
+                await context.Response.Body.WriteAsync(optionAsBytesJson).ConfigureAwait(false);
+                await context.Response.Body.FlushAsync().ConfigureAwait(false);
+            });
         }
     }
 }
