@@ -19,7 +19,12 @@ namespace IOptionsFromLibs.Lib.Configuration
                         {
                             options.Z = 0;
                         }
-                    });
+                    })
+                    .Validate(
+                        options => options.Z <= 1000,
+                        $"The value for {nameof(ModuleAOptions)}.{nameof(ModuleAOptions.Z)} cannot be greater than 1000. It is possible to change it using the configuration key {ModuleAOptions.ModuleASectionName}:{nameof(ModuleAOptions.Z)}"
+                    )
+                    ;
 
             return services;
         }
