@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using IOptionsFromLibs.Lib.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace IOptionsFromLibs.Consumer.Controllers
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  WON'T BE USE UNLESS YOU CHANGE STARTUP.Configure
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -24,7 +29,7 @@ namespace IOptionsFromLibs.Consumer.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok(JsonConvert.SerializeObject(_moduleAOptions.Value));
+            return Ok(JsonSerializer.Serialize(_moduleAOptions.Value));
         }
     }
 }
