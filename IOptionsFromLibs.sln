@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOptionsFromLibs.Consumer", "IOptionsFromLibs.Consumer\IOptionsFromLibs.Consumer.csproj", "{788E7917-39C3-413C-B342-A179EC1D60C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOptionsFromLibs.Lib", "IOptionsFromLibs.Lib\IOptionsFromLibs.Lib.csproj", "{C6DE8758-1C6B-49DE-A12A-D9162F1AAE22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOptionsFromLibs.Library", "IOptionsFromLibs.Library\IOptionsFromLibs.Library.csproj", "{C6DE8758-1C6B-49DE-A12A-D9162F1AAE22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

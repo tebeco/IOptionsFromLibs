@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <YourLibIsOnlyUserInAspNetCoreApp>true</YourLibIsOnlyUserInAspNetCoreApp>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(YourLibIsOnlyUserInAspNetCoreApp)' == 'true'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(YourLibIsOnlyUserInAspNetCoreApp)' != 'true'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.*" />
+  </ItemGroup>
+
+</Project>

@@ -1,24 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using IOptionsFromLibs.Library;
 
-namespace IOptionsFromLibs.Consumer
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddModuleA(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+    options.Y = "Y value from consumer startup";
+    options.Z = -1;
+});
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
-}
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+app.UseHttpsRedirection();
+
+app.MapGet("/", ([FromServices] IOptions<ModuleAOptions> options) =>
+{
+    return TypedResults.Ok(options.Value);
+})
+.WithOpenApi();
+
+app.Run();
